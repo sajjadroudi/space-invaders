@@ -5,6 +5,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/LiquidCrystal.c \
 ../Core/Src/freertos.c \
 ../Core/Src/main.c \
 ../Core/Src/stm32f3xx_hal_msp.c \
@@ -15,6 +16,7 @@ C_SRCS += \
 ../Core/Src/system_stm32f3xx.c 
 
 C_DEPS += \
+./Core/Src/LiquidCrystal.d \
 ./Core/Src/freertos.d \
 ./Core/Src/main.d \
 ./Core/Src/stm32f3xx_hal_msp.d \
@@ -25,6 +27,7 @@ C_DEPS += \
 ./Core/Src/system_stm32f3xx.d 
 
 OBJS += \
+./Core/Src/LiquidCrystal.o \
 ./Core/Src/freertos.o \
 ./Core/Src/main.o \
 ./Core/Src/stm32f3xx_hal_msp.o \

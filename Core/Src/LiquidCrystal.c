@@ -9,6 +9,7 @@
 
 #include "stm32f3xx_hal.h" // change this line accordingly
 #include "LiquidCrystal.h"
+#include <cmsis_os.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -66,7 +67,7 @@ void init(uint8_t fourbitmode, GPIO_TypeDef *gpioport, uint16_t rs, uint16_t rw,
   else 
     _displayfunction = LCD_8BITMODE | LCD_1LINE | LCD_5x8DOTS;
   
-  begin(16, 2);
+  begin(20, 4);
 }
 
 void begin(uint8_t cols, uint8_t lines) {
@@ -100,7 +101,7 @@ void begin(uint8_t cols, uint8_t lines) {
   // SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
   // according to datasheet, we need at least 40ms after power rises above 2.7V
   // so we'll wait 50 just to make sure
-  HAL_Delay(50); 
+  osDelay(50);
 
   // Now we pull both RS and R/W low to begin commands
   HAL_GPIO_WritePin(_port, _rs_pin, GPIO_PIN_RESET);
@@ -117,15 +118,15 @@ void begin(uint8_t cols, uint8_t lines) {
 
     // we start in 8bit mode, try to set 4 bit mode
     write4bits(0x03);
-    HAL_Delay(5); // wait min 4.1ms
+    osDelay(5); // wait min 4.1ms
 
     // second try
     write4bits(0x03);
-    HAL_Delay(5); // wait min 4.1ms
+    osDelay(5); // wait min 4.1ms
     
     // third go!
     write4bits(0x03); 
-    HAL_Delay(1);
+    osDelay(1);
 
     // finally, set to 4-bit interface
     write4bits(0x02); 
@@ -135,11 +136,11 @@ void begin(uint8_t cols, uint8_t lines) {
 
     // Send function set command sequence
     command(LCD_FUNCTIONSET | _displayfunction);
-    HAL_Delay(5);  // wait more than 4.1ms
+    osDelay(5);  // wait more than 4.1ms
 
     // second try
     command(LCD_FUNCTIONSET | _displayfunction);
-    HAL_Delay(1);
+    osDelay(1);
 
     // third go
     command(LCD_FUNCTIONSET | _displayfunction);
@@ -195,13 +196,13 @@ void setRowOffsets(int row0, int row1, int row2, int row3)
 void clear(void)
 {
   command(LCD_CLEARDISPLAY);  // clear display, set cursor position to zero
-  HAL_Delay(2);  // this command takes a long time!
+  osDelay(2);  // this command takes a long time!
 }
 
 void home(void)
 {
   command(LCD_RETURNHOME);  // set cursor position to zero
-  HAL_Delay(2);  // this command takes a long time!
+  osDelay(2);  // this command takes a long time!
 }
 
 void setCursor(uint8_t col, uint8_t row)
@@ -336,11 +337,11 @@ void send(uint8_t value, GPIO_PinState mode) {
 
 void pulseEnable(void) {
   HAL_GPIO_WritePin(_port, _enable_pin, GPIO_PIN_RESET);
-  HAL_Delay(1);    
+  osDelay(1);
   HAL_GPIO_WritePin(_port, _enable_pin, GPIO_PIN_SET);
-  HAL_Delay(1);    // enable pulse must be >450ns
+  osDelay(1);    // enable pulse must be >450ns
   HAL_GPIO_WritePin(_port, _enable_pin, GPIO_PIN_RESET);
-  HAL_Delay(1);   // commands need > 37us to settle
+  osDelay(1);   // commands need > 37us to settle
 }
 
 void write4bits(uint8_t value) {
