@@ -23,6 +23,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "globals.h"
+#include "lcd.h"
 
 /* USER CODE END Includes */
 
@@ -47,7 +49,18 @@ SPI_HandleTypeDef hspi1;
 
 PCD_HandleTypeDef hpcd_USB_FS;
 
-osThreadId defaultTaskHandle;
+/* Definitions for updateLcdTask */
+osThreadId_t updateLcdTaskHandle;
+const osThreadAttr_t updateLcdTask_attributes = {
+  .name = "updateLcdTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+
+osMutexId_t lcdMutexHandle;
+const osMutexAttr_t lcdMutex_attributes = {
+  .name = "lcdMutex"
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -58,7 +71,7 @@ static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USB_PCD_Init(void);
-void StartDefaultTask(void const * argument);
+void StartUpdateLcdTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -104,8 +117,12 @@ int main(void)
 
   /* USER CODE END 2 */
 
+  /* Init scheduler */
+  osKernelInitialize();
+
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
+  lcdMutexHandle = osMutexNew(&lcdMutex_attributes);
   /* USER CODE END RTOS_MUTEX */
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
@@ -121,13 +138,16 @@ int main(void)
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  /* creation of updateLcdTask */
+  updateLcdTaskHandle = osThreadNew(StartUpdateLcdTask, NULL, &updateLcdTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
+
+  /* USER CODE BEGIN RTOS_EVENTS */
+  /* add events, ... */
+  /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
   osKernelStart();
@@ -370,20 +390,24 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_StartUpdateLcdTask */
 /**
-  * @brief  Function implementing the defaultTask thread.
+  * @brief  Function implementing the updateLcdTask thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+/* USER CODE END Header_StartUpdateLcdTask */
+void StartUpdateLcdTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
+	initLcd();
+
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    osDelay(50);
+	updateLcd();
+	moveHeroLeft();
   }
   /* USER CODE END 5 */
 }

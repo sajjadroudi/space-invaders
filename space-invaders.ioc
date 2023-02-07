@@ -1,6 +1,6 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT
-FREERTOS.Tasks01=defaultTask,0,128,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL
+FREERTOS.Tasks01=updateLcdTask,24,128,StartUpdateLcdTask,Default,NULL,Dynamic,NULL,NULL
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
 File.Version=6
 GPIO.groupedBy=Group By Peripherals
@@ -40,7 +40,7 @@ Mcu.Pin25=PB3
 Mcu.Pin26=PB6
 Mcu.Pin27=PB7
 Mcu.Pin28=PE0
-Mcu.Pin29=VP_FREERTOS_VS_CMSIS_V1
+Mcu.Pin29=VP_FREERTOS_VS_CMSIS_V2
 Mcu.Pin3=PC14-OSC32_IN
 Mcu.Pin30=VP_SYS_VS_tim1
 Mcu.Pin4=PC15-OSC32_OUT
@@ -284,8 +284,8 @@ SPI1.IPParameters=CalculateBaudRate,BaudRatePrescaler,CalculateBaudRate-Full_Dup
 SPI1.Mode=SPI_MODE_MASTER
 SPI1.Mode-Full_Duplex_Master=SPI_MODE_MASTER
 SPI1.VirtualType=VM_MASTER
-VP_FREERTOS_VS_CMSIS_V1.Mode=CMSIS_V1
-VP_FREERTOS_VS_CMSIS_V1.Signal=FREERTOS_VS_CMSIS_V1
+VP_FREERTOS_VS_CMSIS_V2.Mode=CMSIS_V2
+VP_FREERTOS_VS_CMSIS_V2.Signal=FREERTOS_VS_CMSIS_V2
 VP_SYS_VS_tim1.Mode=TIM1
 VP_SYS_VS_tim1.Signal=SYS_VS_tim1
 board=STM32F3DISCOVERY
