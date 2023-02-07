@@ -43,4 +43,8 @@ void putBullet(Bullet bullet);
 
 int isEnemy(int row, int col);
 
+int findRandomEnemyCol(int row);
+
+int findLastRowOfEnemies();
+
 #endif /* INC_LCD_H_ */

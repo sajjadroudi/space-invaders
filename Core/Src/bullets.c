@@ -37,15 +37,15 @@ void moveBullet(int bulletIndex) {
 
 	clearAt(bullets[bulletIndex].row, bullets[bulletIndex].col);
 
-	if(bullets[bulletIndex].row <= 0 || bullets[bulletIndex].row >= VERTICAL_LCD_ROWS) {
-		removeBullet(bulletIndex);
-		return;
-	}
-
 	if(bullets[bulletIndex].direction == UP) {
 		bullets[bulletIndex].row--;
 	} else {
 		bullets[bulletIndex].row++;
+	}
+
+	if(bullets[bulletIndex].row < 0 || bullets[bulletIndex].row >= VERTICAL_LCD_ROWS) {
+		removeBullet(bulletIndex);
+		return;
 	}
 
 	putBullet(bullets[bulletIndex]);

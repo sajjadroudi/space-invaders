@@ -8,11 +8,11 @@
 
 #include "config.h"
 
-int moveEnemiesDownInterval;
+int moveEnemiesDownInterval = 5000;
 
-int heroLevelHealth;
+int heroLevelHealth = 7;
 
-int killedEnemyCountToWin;
+int killedEnemyCountToWin = 15;
 
 void setDifficultyLevel(int level) {
 	switch(level) {

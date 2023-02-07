@@ -16,6 +16,8 @@
 #define GS_HERO_LOST -1
 #define GS_NOT_FINISHED 0
 
+#define UNDEFINED -1
+
 void setDifficultyLevel(int level);
 
 int getMoveEnemiesDownInterval();

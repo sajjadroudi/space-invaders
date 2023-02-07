@@ -13,6 +13,7 @@
 #include "LiquidCrystal.h"
 #include "globals.h"
 #include "bullets.h"
+#include "config.h"
 
 const int HERO_ROW = VERTICAL_LCD_ROWS - 1;
 
@@ -140,6 +141,13 @@ int findLastRowOfEnemies() {
 		}
 	}
 	return -1;
+}
+
+int findRandomEnemyCol(int row) {
+	int index = (rand() % 4);
+	if(lcdMat[row][index] == CT_ENEMY)
+		return index;
+	return UNDEFINED;
 }
 
 void moveDown(int row, int col) {

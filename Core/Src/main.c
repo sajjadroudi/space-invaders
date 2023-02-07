@@ -26,6 +26,9 @@
 #include "globals.h"
 #include "lcd.h"
 #include "bullets.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 /* USER CODE END Includes */
 
@@ -64,6 +67,13 @@ const osThreadAttr_t updateBulletsTa_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityHigh,
 };
+/* Definitions for enemyShootTask */
+osThreadId_t enemyShootTaskHandle;
+const osThreadAttr_t enemyShootTask_attributes = {
+  .name = "enemyShootTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* USER CODE BEGIN PV */
 osMutexId_t lcdMutexHandle;
 const osMutexAttr_t lcdMutex_attributes = {
@@ -79,6 +89,7 @@ static void MX_SPI1_Init(void);
 static void MX_USB_PCD_Init(void);
 void StartUpdateLcdTask(void *argument);
 void StartUpdateBulletsTask(void *argument);
+void StartEnemyShootTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -96,6 +107,7 @@ void StartUpdateBulletsTask(void *argument);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	srand(time(NULL));
 
   /* USER CODE END 1 */
 
@@ -150,6 +162,9 @@ int main(void)
 
   /* creation of updateBulletsTa */
   updateBulletsTaHandle = osThreadNew(StartUpdateBulletsTask, NULL, &updateBulletsTa_attributes);
+
+  /* creation of enemyShootTask */
+  enemyShootTaskHandle = osThreadNew(StartEnemyShootTask, NULL, &enemyShootTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -433,7 +448,7 @@ void StartUpdateBulletsTask(void *argument)
 {
   /* USER CODE BEGIN StartUpdateBulletsTask */
 	osDelay(2000);
-	shoot(getHeroRow() - 1, getHeroCol(), UP);
+//	shoot(getHeroRow() - 1, getHeroCol(), UP);
   /* Infinite loop */
   for(;;) {
     osDelay(1000);
@@ -451,6 +466,30 @@ void StartUpdateBulletsTask(void *argument)
     }
   }
   /* USER CODE END StartUpdateBulletsTask */
+}
+
+/* USER CODE BEGIN Header_StartEnemyShootTask */
+/**
+* @brief Function implementing the enemyShootTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartEnemyShootTask */
+void StartEnemyShootTask(void *argument)
+{
+  /* USER CODE BEGIN StartEnemyShootTask */
+  /* Infinite loop */
+  for(;;) {
+    osDelay(2000);
+    if(rand() % 8 == 0) {
+    	int lastRow = findLastRowOfEnemies();
+    	int col = findRandomEnemyCol(lastRow);
+    	if(col != UNDEFINED) {
+    		shoot(lastRow + 1, col, DOWN);
+    	}
+    }
+  }
+  /* USER CODE END StartEnemyShootTask */
 }
 
 /**
