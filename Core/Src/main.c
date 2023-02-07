@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "globals.h"
 #include "lcd.h"
+#include "bullets.h"
 
 /* USER CODE END Includes */
 
@@ -56,13 +57,18 @@ const osThreadAttr_t updateLcdTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
-
+/* Definitions for updateBulletsTa */
+osThreadId_t updateBulletsTaHandle;
+const osThreadAttr_t updateBulletsTa_attributes = {
+  .name = "updateBulletsTa",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityHigh,
+};
+/* USER CODE BEGIN PV */
 osMutexId_t lcdMutexHandle;
 const osMutexAttr_t lcdMutex_attributes = {
   .name = "lcdMutex"
 };
-/* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -72,6 +78,7 @@ static void MX_I2C1_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USB_PCD_Init(void);
 void StartUpdateLcdTask(void *argument);
+void StartUpdateBulletsTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -140,6 +147,9 @@ int main(void)
   /* Create the thread(s) */
   /* creation of updateLcdTask */
   updateLcdTaskHandle = osThreadNew(StartUpdateLcdTask, NULL, &updateLcdTask_attributes);
+
+  /* creation of updateBulletsTa */
+  updateBulletsTaHandle = osThreadNew(StartUpdateBulletsTask, NULL, &updateBulletsTa_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -405,11 +415,42 @@ void StartUpdateLcdTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1000);
+    osDelay(100);
 	updateLcd();
-	moveHeroRight();
+//	moveHeroRight();
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartUpdateBulletsTask */
+/**
+* @brief Function implementing the updateBulletsTa thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUpdateBulletsTask */
+void StartUpdateBulletsTask(void *argument)
+{
+  /* USER CODE BEGIN StartUpdateBulletsTask */
+	osDelay(2000);
+	shoot(getHeroRow() - 1, getHeroCol(), UP);
+  /* Infinite loop */
+  for(;;) {
+    osDelay(1000);
+    moveAllBullets();
+    if(doesHitHero()) {
+    	decrementHeroLevelHealth();
+    	if(getHeroLevelHealth() == 0) { // If hero kooshte shod
+    		// TODO
+    	}
+    } else {
+    	handleHittingEnemy();
+    	if(getKilledEnemyCountToWin() == 0) {
+    		// TODO
+    	}
+    }
+  }
+  /* USER CODE END StartUpdateBulletsTask */
 }
 
 /**

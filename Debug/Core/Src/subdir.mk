@@ -6,6 +6,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/Src/LiquidCrystal.c \
+../Core/Src/bullets.c \
 ../Core/Src/characters.c \
 ../Core/Src/config.c \
 ../Core/Src/freertos.c \
@@ -20,6 +21,7 @@ C_SRCS += \
 
 C_DEPS += \
 ./Core/Src/LiquidCrystal.d \
+./Core/Src/bullets.d \
 ./Core/Src/characters.d \
 ./Core/Src/config.d \
 ./Core/Src/freertos.d \
@@ -34,6 +36,7 @@ C_DEPS += \
 
 OBJS += \
 ./Core/Src/LiquidCrystal.o \
+./Core/Src/bullets.o \
 ./Core/Src/characters.o \
 ./Core/Src/config.o \
 ./Core/Src/freertos.o \

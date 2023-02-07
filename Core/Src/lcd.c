@@ -12,6 +12,7 @@
 #include "lcd.h"
 #include "LiquidCrystal.h"
 #include "globals.h"
+#include "bullets.h"
 
 const int HERO_ROW = VERTICAL_LCD_ROWS - 1;
 
@@ -87,12 +88,20 @@ void clearAt(int row, int col) {
 	lcdMat[row][col] = CT_SPACE;
 }
 
+void putBullet(Bullet bullet) {
+	lcdMat[bullet.row][bullet.col] = CT_BULLET;
+}
+
 int getHeroCol() {
 	for(int c = 0; c < VERTICAL_LCD_COLUMNS; c++) {
 		if(lcdMat[HERO_ROW][c] == CT_HERO)
 			return c;
 	}
 	return -1;
+}
+
+int getHeroRow() {
+	return HERO_ROW;
 }
 
 void moveHeroRight() {
@@ -120,6 +129,7 @@ int findFirstRowOfEnemies() {
 				return r;
 		}
 	}
+	return -1;
 }
 
 int findLastRowOfEnemies() {
@@ -129,6 +139,7 @@ int findLastRowOfEnemies() {
 				return r;
 		}
 	}
+	return -1;
 }
 
 void moveDown(int row, int col) {
@@ -166,6 +177,10 @@ void moveEnemiesDown() {
 				moveDown(r, c);
 		}
 	}
+}
+
+int isEnemy(int row, int col) {
+	return lcdMat[row][col] == CT_ENEMY;
 }
 
 void commandHeroToShoot() {

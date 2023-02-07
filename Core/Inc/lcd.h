@@ -35,6 +35,12 @@ void commandHeroToShoot();
 
 void moveDown(int row, int col);
 
+int getHeroRow();
 
+int getHeroCol();
+
+void putBullet(Bullet bullet);
+
+int isEnemy(int row, int col);
 
 #endif /* INC_LCD_H_ */

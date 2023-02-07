@@ -15,6 +15,17 @@
 #define CT_ENEMY 2
 #define CT_BULLET 3
 
+typedef enum {
+	UP,
+	DOWN
+} Dir;
+
+typedef struct {
+	int row;
+	int col;
+	Dir direction;
+} Bullet;
+
 extern byte enemyByte[];
 
 extern byte heroByte[];
