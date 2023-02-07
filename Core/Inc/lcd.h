@@ -45,4 +45,6 @@ int findRandomEnemyCol(int row);
 
 int findLastRowOfEnemies();
 
+void moveEnemiesDown();
+
 #endif /* INC_LCD_H_ */

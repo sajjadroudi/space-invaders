@@ -74,6 +74,13 @@ const osThreadAttr_t enemyShootTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for moveDownEnemies */
+osThreadId_t moveDownEnemiesHandle;
+const osThreadAttr_t moveDownEnemies_attributes = {
+  .name = "moveDownEnemies",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* USER CODE BEGIN PV */
 osMutexId_t lcdMutexHandle;
 const osMutexAttr_t lcdMutex_attributes = {
@@ -90,6 +97,7 @@ static void MX_USB_PCD_Init(void);
 void StartUpdateLcdTask(void *argument);
 void StartUpdateBulletsTask(void *argument);
 void StartEnemyShootTask(void *argument);
+void StartMoveDownEnemiesTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -165,6 +173,9 @@ int main(void)
 
   /* creation of enemyShootTask */
   enemyShootTaskHandle = osThreadNew(StartEnemyShootTask, NULL, &enemyShootTask_attributes);
+
+  /* creation of moveDownEnemies */
+  moveDownEnemiesHandle = osThreadNew(StartMoveDownEnemiesTask, NULL, &moveDownEnemies_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -490,6 +501,24 @@ void StartEnemyShootTask(void *argument)
     }
   }
   /* USER CODE END StartEnemyShootTask */
+}
+
+/* USER CODE BEGIN Header_StartMoveDownEnemiesTask */
+/**
+* @brief Function implementing the moveDownEnemies thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartMoveDownEnemiesTask */
+void StartMoveDownEnemiesTask(void *argument)
+{
+  /* USER CODE BEGIN StartMoveDownEnemiesTask */
+  /* Infinite loop */
+  for(;;) {
+    osDelay(getMoveEnemiesDownInterval());
+    moveEnemiesDown();
+  }
+  /* USER CODE END StartMoveDownEnemiesTask */
 }
 
 /**
