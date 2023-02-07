@@ -17,10 +17,6 @@ const int HERO_ROW = VERTICAL_LCD_ROWS - 1;
 
 int lcdMat[VERTICAL_LCD_ROWS][VERTICAL_LCD_COLUMNS] = {
 
-		{ CT_SPACE, CT_SPACE, CT_SPACE, CT_SPACE },
-		{ CT_SPACE, CT_SPACE, CT_SPACE, CT_SPACE },
-		{ CT_SPACE, CT_SPACE, CT_SPACE, CT_SPACE },
-
 		{ CT_ENEMY, CT_ENEMY, CT_ENEMY, CT_ENEMY },
 		{ CT_ENEMY, CT_ENEMY, CT_ENEMY, CT_ENEMY },
 		{ CT_ENEMY, CT_ENEMY, CT_ENEMY, CT_ENEMY },
@@ -33,6 +29,9 @@ int lcdMat[VERTICAL_LCD_ROWS][VERTICAL_LCD_COLUMNS] = {
 		{ CT_ENEMY, CT_ENEMY, CT_ENEMY, CT_ENEMY },
 		{ CT_ENEMY, CT_ENEMY, CT_ENEMY, CT_ENEMY },
 
+		{ CT_SPACE, CT_SPACE, CT_SPACE, CT_SPACE },
+		{ CT_SPACE, CT_SPACE, CT_SPACE, CT_SPACE },
+		{ CT_SPACE, CT_SPACE, CT_SPACE, CT_SPACE },
 		{ CT_SPACE, CT_SPACE, CT_SPACE, CT_SPACE },
 		{ CT_SPACE, CT_SPACE, CT_SPACE, CT_SPACE },
 		{ CT_SPACE, CT_SPACE, CT_SPACE, CT_SPACE },
@@ -112,6 +111,42 @@ void moveHeroLeft() {
 
 	clearAt(HERO_ROW, currentCol);
 	lcdMat[HERO_ROW][prevCol] = CT_HERO;
+}
+
+int findFirstRowOfEnemies() {
+	for(int r = 0; r < VERTICAL_LCD_ROWS; r++) {
+		for(int c = 0; c < VERTICAL_LCD_COLUMNS; c++) {
+			if(lcdMat[r][c] == CT_ENEMY)
+				return r;
+		}
+	}
+}
+
+int findLastRowOfEnemies() {
+	for(int r = VERTICAL_LCD_ROWS; r >= 0; r--) {
+		for(int c = 0; c < VERTICAL_LCD_COLUMNS; c++) {
+			if(lcdMat[r][c] == CT_ENEMY)
+				return r;
+		}
+	}
+}
+
+void moveDown(int row, int col) {
+	int pawn = lcdMat[row][col];
+	lcdMat[row + 1][col] = pawn;
+	lcdMat[row][col] = CT_SPACE;
+}
+
+void moveEnemiesDown() {
+	int startRow = findFirstRowOfEnemies();
+	int endRow = findLastRowOfEnemies();
+
+	for(int r = endRow; r >= startRow; r--) {
+		for(int c = 0; c < VERTICAL_LCD_COLUMNS; c++) {
+			if(lcdMat[r][c] == CT_ENEMY)
+				moveDown(r, c);
+		}
+	}
 }
 
 void commandHeroToShoot() {

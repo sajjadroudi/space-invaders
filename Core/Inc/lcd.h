@@ -33,4 +33,8 @@ void moveHeroLeft();
 
 void commandHeroToShoot();
 
+void moveDown(int row, int col);
+
+
+
 #endif /* INC_LCD_H_ */
