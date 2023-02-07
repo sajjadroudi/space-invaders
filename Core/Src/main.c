@@ -405,7 +405,7 @@ void StartUpdateLcdTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(50);
+    osDelay(500);
 	updateLcd();
 	moveHeroLeft();
   }

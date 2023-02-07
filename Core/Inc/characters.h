@@ -15,12 +15,6 @@
 #define CT_ENEMY 2
 #define CT_BULLET 3
 
-typedef struct {
-    int type;
-    int row;
-    int col;
-} Character;
-
 extern byte enemyByte[];
 
 extern byte heroByte[];

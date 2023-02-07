@@ -42,8 +42,18 @@ int lcdMat[VERTICAL_LCD_ROWS][VERTICAL_LCD_COLUMNS] = {
 		{ CT_SPACE, CT_HERO, CT_SPACE, CT_SPACE },
 };
 
+int copyLcdMat[VERTICAL_LCD_ROWS][VERTICAL_LCD_COLUMNS] = { 0 };
+
 void setLoc(int row, int col) {
 	setCursor(row, VERTICAL_LCD_COLUMNS - col - 1);
+}
+
+void doCopy() {
+	for(int r = 0; r < VERTICAL_LCD_ROWS; r++) {
+		for(int c = 0; c < VERTICAL_LCD_COLUMNS; c++) {
+			copyLcdMat[r][c] = lcdMat[r][c];
+		}
+	}
 }
 
 void initLcd() {
@@ -60,6 +70,9 @@ void initLcd() {
 void updateLcd() {
 	for(int r = 0; r < VERTICAL_LCD_ROWS; r++) {
 		for(int c = 0; c < VERTICAL_LCD_COLUMNS; c++) {
+			if(copyLcdMat[r][c] == lcdMat[r][c])
+				continue;
+
 			osMutexAcquire(lcdMutexHandle, osWaitForever);
 			setLoc(r, c);
 			int type = lcdMat[r][c];
@@ -67,6 +80,8 @@ void updateLcd() {
 			osMutexRelease(lcdMutexHandle);
 		}
 	}
+
+	doCopy();
 }
 
 void clearAt(int row, int col) {
@@ -100,5 +115,5 @@ void moveHeroLeft() {
 }
 
 void commandHeroToShoot() {
-// TODO
+	// TODO
 }
