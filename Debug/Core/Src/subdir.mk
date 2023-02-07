@@ -7,6 +7,7 @@
 C_SRCS += \
 ../Core/Src/LiquidCrystal.c \
 ../Core/Src/characters.c \
+../Core/Src/config.c \
 ../Core/Src/freertos.c \
 ../Core/Src/lcd.c \
 ../Core/Src/main.c \
@@ -20,6 +21,7 @@ C_SRCS += \
 C_DEPS += \
 ./Core/Src/LiquidCrystal.d \
 ./Core/Src/characters.d \
+./Core/Src/config.d \
 ./Core/Src/freertos.d \
 ./Core/Src/lcd.d \
 ./Core/Src/main.d \
@@ -33,6 +35,7 @@ C_DEPS += \
 OBJS += \
 ./Core/Src/LiquidCrystal.o \
 ./Core/Src/characters.o \
+./Core/Src/config.o \
 ./Core/Src/freertos.o \
 ./Core/Src/lcd.o \
 ./Core/Src/main.o \

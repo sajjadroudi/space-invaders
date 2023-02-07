@@ -1,5 +1,6 @@
 "./Core/Src/LiquidCrystal.o"
 "./Core/Src/characters.o"
+"./Core/Src/config.o"
 "./Core/Src/freertos.o"
 "./Core/Src/lcd.o"
 "./Core/Src/main.o"

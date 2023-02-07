@@ -11,6 +11,7 @@
 #include "main.h"
 #include "stdbool.h"
 #include "globals.h"
+#include "config.h"
 
 typedef unsigned char byte;
 

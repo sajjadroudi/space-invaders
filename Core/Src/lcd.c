@@ -137,6 +137,25 @@ void moveDown(int row, int col) {
 	lcdMat[row][col] = CT_SPACE;
 }
 
+int getWinner() {
+	if(getHeroLevelHealth() <= 0)
+		return GS_HERO_LOST;
+
+	if(getKilledEnemyCountToWin() <= 0)
+		return GS_HERO_WON;
+
+	for(int c = 0; c < VERTICAL_LCD_COLUMNS; c++) {
+		if(lcdMat[HERO_ROW][c] == CT_ENEMY) {
+			return GS_HERO_LOST;
+		}
+	}
+	return GS_NOT_FINISHED;
+}
+
+int isFinished() {
+	return getWinner() != GS_NOT_FINISHED;
+}
+
 void moveEnemiesDown() {
 	int startRow = findFirstRowOfEnemies();
 	int endRow = findLastRowOfEnemies();

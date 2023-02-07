@@ -407,7 +407,7 @@ void StartUpdateLcdTask(void *argument)
   {
     osDelay(1000);
 	updateLcd();
-	moveEnemiesDown();
+	moveHeroRight();
   }
   /* USER CODE END 5 */
 }
