@@ -31,8 +31,6 @@ void moveHeroRight();
 
 void moveHeroLeft();
 
-void commandHeroToShoot();
-
 void moveDown(int row, int col);
 
 int getHeroRow();

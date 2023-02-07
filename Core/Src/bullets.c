@@ -26,7 +26,6 @@ void shoot(int startRow, int startCol, Dir dir) {
 }
 
 void removeBullet(int index) {
-	clearAt(bullets[index].row, bullets[index].col);
 	for(int i = index + 1; i < getBulletCount(); i++) {
 		bullets[i - 1] = bullets[i];
 	}
@@ -43,12 +42,10 @@ void moveBullet(int bulletIndex) {
 		bullets[bulletIndex].row++;
 	}
 
-	if(bullets[bulletIndex].row < 0 || bullets[bulletIndex].row >= VERTICAL_LCD_ROWS) {
+	int row = bullets[bulletIndex].row;
+	if(row < 0 || row >= VERTICAL_LCD_ROWS) {
 		removeBullet(bulletIndex);
-		return;
 	}
-
-	putBullet(bullets[bulletIndex]);
 }
 
 int getBulletCount() {
@@ -65,23 +62,34 @@ void moveAllBullets() {
 	}
 }
 
+void updateAllBulletsOnMatrix() {
+	for(int i = 0; i < getBulletCount(); i++) {
+		int row = bullets[i].row;
+		if(row >= 0 && row < VERTICAL_LCD_ROWS) {
+			putBullet(bullets[i]);
+		}
+	}
+}
+
 void handleHittingEnemy() {
 	for(int i = getBulletCount() - 1; i >= 0; i--) {
 		Bullet bullet = getBullet(i);
 		if(isEnemy(bullet.row, bullet.col)) {
 			incrementKilledEnemyCount();
+			clearAt(bullet.row, bullet.col);
 			removeBullet(i);
 			break;
 		}
 	}
 }
 
-int doesHitHero() {
+void handleHittingHero() {
 	for(int i = 0; i < getBulletCount(); i++) {
 		Bullet bullet = getBullet(i);
 		if(bullet.row == getHeroRow() && bullet.col == getHeroCol()) {
-			return 1;
+			decrementHeroLevelHealth();
+			removeBullet(i);
+			break;
 		}
 	}
-	return 0;
 }

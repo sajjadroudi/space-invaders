@@ -14,16 +14,16 @@
 
 void shoot(int startRow, int startCol, Dir dir);
 
-void moveBullet(int bulletIndex);
-
 int getBulletCount();
 
 Bullet getBullet(int index);
 
 void moveAllBullets();
 
-int doesHitHero();
+void handleHittingHero();
 
 void handleHittingEnemy();
+
+void updateAllBulletsOnMatrix();
 
 #endif /* INC_BULLETS_H_ */

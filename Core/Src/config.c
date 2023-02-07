@@ -10,7 +10,7 @@
 
 int moveEnemiesDownInterval = 5000;
 
-int heroLevelHealth = 7;
+int heroLevelHealth = 2;
 
 int killedEnemyCountToWin = 15;
 

@@ -447,23 +447,23 @@ void StartUpdateLcdTask(void *argument)
 void StartUpdateBulletsTask(void *argument)
 {
   /* USER CODE BEGIN StartUpdateBulletsTask */
-	osDelay(2000);
-//	shoot(getHeroRow() - 1, getHeroCol(), UP);
+
   /* Infinite loop */
   for(;;) {
     osDelay(1000);
     moveAllBullets();
-    if(doesHitHero()) {
-    	decrementHeroLevelHealth();
-    	if(getHeroLevelHealth() == 0) { // If hero kooshte shod
-    		// TODO
-    	}
-    } else {
-    	handleHittingEnemy();
-    	if(getKilledEnemyCountToWin() == 0) {
-    		// TODO
-    	}
-    }
+
+    handleHittingHero();
+	if(getHeroLevelHealth() == 0) { // If hero kooshte shod
+		// TODO
+	}
+
+    handleHittingEnemy();
+	if(getKilledEnemyCountToWin() == 0) {
+		// TODO
+	}
+
+	updateAllBulletsOnMatrix();
   }
   /* USER CODE END StartUpdateBulletsTask */
 }
@@ -480,12 +480,12 @@ void StartEnemyShootTask(void *argument)
   /* USER CODE BEGIN StartEnemyShootTask */
   /* Infinite loop */
   for(;;) {
-    osDelay(2000);
+	osDelay(5000);
     if(rand() % 8 == 0) {
     	int lastRow = findLastRowOfEnemies();
     	int col = findRandomEnemyCol(lastRow);
     	if(col != UNDEFINED) {
-    		shoot(lastRow + 1, col, DOWN);
+    		shoot(lastRow + 1, 1, DOWN);
     	}
     }
   }
