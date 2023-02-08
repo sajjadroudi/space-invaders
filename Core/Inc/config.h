@@ -18,6 +18,15 @@
 
 #define UNDEFINED -1
 
+#define MAX_NAME_LENGTH 100
+
+typedef enum {
+	IN_PROGRESS,
+	VICTORY,
+	DEFEAT,
+	NOT_STARTED
+} GameState;
+
 void setDifficultyLevel(int level);
 
 int getMoveEnemiesDownInterval();
@@ -29,5 +38,17 @@ int getKilledEnemyCountToWin();
 void incrementKilledEnemyCount();
 
 void decrementHeroLevelHealth();
+
+void setPlayerName(char name[MAX_NAME_LENGTH]);
+
+char* getPlayerName();
+
+void incrementScore();
+
+int getScore();
+
+void setGameState(GameState state);
+
+GameState getGameState();
 
 #endif /* INC_CONFIG_H_ */

@@ -33,6 +33,7 @@
 #include "screen_intro.h"
 #include "screen_menu.h"
 #include "screen_difflevel.h"
+#include "screen_finish.h"
 
 /* USER CODE END Includes */
 

@@ -7,12 +7,19 @@
 
 
 #include "config.h"
+#include <string.h>
 
 int moveEnemiesDownInterval = 5000;
 
 int heroLevelHealth = 2;
 
 int killedEnemyCountToWin = 15;
+
+char playerName[MAX_NAME_LENGTH] = "TestPlayer";
+
+int score = 0;
+
+GameState state;
 
 void setDifficultyLevel(int level) {
 	switch(level) {
@@ -52,4 +59,28 @@ void incrementKilledEnemyCount() {
 
 void decrementHeroLevelHealth() {
 	heroLevelHealth--;
+}
+
+void setPlayerName(char name[MAX_NAME_LENGTH]) {
+	strcpy(playerName, name); // This might cause a bug
+}
+
+char* getPlayerName() {
+	return playerName;
+}
+
+void incrementScore() {
+	score++;
+}
+
+int getScore() {
+	return score;
+}
+
+void setGameState(GameState s) {
+	state = s;
+}
+
+GameState getGameState() {
+	return state;
 }

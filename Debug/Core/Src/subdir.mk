@@ -14,6 +14,7 @@ C_SRCS += \
 ../Core/Src/main.c \
 ../Core/Src/screen_about.c \
 ../Core/Src/screen_difflevel.c \
+../Core/Src/screen_finish.c \
 ../Core/Src/screen_intro.c \
 ../Core/Src/screen_menu.c \
 ../Core/Src/stm32f3xx_hal_msp.c \
@@ -34,6 +35,7 @@ C_DEPS += \
 ./Core/Src/main.d \
 ./Core/Src/screen_about.d \
 ./Core/Src/screen_difflevel.d \
+./Core/Src/screen_finish.d \
 ./Core/Src/screen_intro.d \
 ./Core/Src/screen_menu.d \
 ./Core/Src/stm32f3xx_hal_msp.d \
@@ -54,6 +56,7 @@ OBJS += \
 ./Core/Src/main.o \
 ./Core/Src/screen_about.o \
 ./Core/Src/screen_difflevel.o \
+./Core/Src/screen_finish.o \
 ./Core/Src/screen_intro.o \
 ./Core/Src/screen_menu.o \
 ./Core/Src/stm32f3xx_hal_msp.o \
