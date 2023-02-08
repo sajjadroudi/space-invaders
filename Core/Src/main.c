@@ -32,6 +32,7 @@
 #include "screen_about.h"
 #include "screen_intro.h"
 #include "screen_menu.h"
+#include "screen_difflevel.h"
 
 /* USER CODE END Includes */
 
