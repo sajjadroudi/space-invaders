@@ -17,7 +17,7 @@ void showMenuScreen() {
     osMutexAcquire(lcdMutexHandle, osWaitForever);
 
     setCursor(8, 0);
-    print("Menu");
+    print("<Menu>");
 
     setCursor(0, 2);
     print("1) Start Game");

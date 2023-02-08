@@ -18,7 +18,7 @@ void showIntroScreen() {
 
     setCursor(3, 0);
 
-    print("Space Invaders");
+    print("<Space Invaders>");
 
     setCursor(10, 2);
     write(CT_HERO);

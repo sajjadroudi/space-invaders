@@ -11,8 +11,8 @@
 void showDiffLevelScreen() {
     osMutexAcquire(lcdMutexHandle, osWaitForever);
 
-    setCursor(2, 0);
-    print("Difficulty Level");
+    setCursor(1, 0);
+    print("<Difficulty Level>");
 
     setCursor(0, 1);
     print("1) Easy");
