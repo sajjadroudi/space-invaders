@@ -13,4 +13,6 @@
 
 extern osMutexId_t lcdMutexHandle;
 
+extern RTC_HandleTypeDef hrtc;
+
 #endif /* INC_GLOBALS_H_ */

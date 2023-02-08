@@ -12,12 +12,15 @@ C_SRCS += \
 ../Core/Src/freertos.c \
 ../Core/Src/lcd.c \
 ../Core/Src/main.c \
+../Core/Src/screen_about.c \
+../Core/Src/screen_intro.c \
 ../Core/Src/stm32f3xx_hal_msp.c \
 ../Core/Src/stm32f3xx_hal_timebase_tim.c \
 ../Core/Src/stm32f3xx_it.c \
 ../Core/Src/syscalls.c \
 ../Core/Src/sysmem.c \
-../Core/Src/system_stm32f3xx.c 
+../Core/Src/system_stm32f3xx.c \
+../Core/Src/timehandler.c 
 
 C_DEPS += \
 ./Core/Src/LiquidCrystal.d \
@@ -27,12 +30,15 @@ C_DEPS += \
 ./Core/Src/freertos.d \
 ./Core/Src/lcd.d \
 ./Core/Src/main.d \
+./Core/Src/screen_about.d \
+./Core/Src/screen_intro.d \
 ./Core/Src/stm32f3xx_hal_msp.d \
 ./Core/Src/stm32f3xx_hal_timebase_tim.d \
 ./Core/Src/stm32f3xx_it.d \
 ./Core/Src/syscalls.d \
 ./Core/Src/sysmem.d \
-./Core/Src/system_stm32f3xx.d 
+./Core/Src/system_stm32f3xx.d \
+./Core/Src/timehandler.d 
 
 OBJS += \
 ./Core/Src/LiquidCrystal.o \
@@ -42,12 +48,15 @@ OBJS += \
 ./Core/Src/freertos.o \
 ./Core/Src/lcd.o \
 ./Core/Src/main.o \
+./Core/Src/screen_about.o \
+./Core/Src/screen_intro.o \
 ./Core/Src/stm32f3xx_hal_msp.o \
 ./Core/Src/stm32f3xx_hal_timebase_tim.o \
 ./Core/Src/stm32f3xx_it.o \
 ./Core/Src/syscalls.o \
 ./Core/Src/sysmem.o \
-./Core/Src/system_stm32f3xx.o 
+./Core/Src/system_stm32f3xx.o \
+./Core/Src/timehandler.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
