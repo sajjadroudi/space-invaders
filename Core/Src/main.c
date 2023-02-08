@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "screen_about.h"
+#include "screen_intro.h"
 
 /* USER CODE END Includes */
 
