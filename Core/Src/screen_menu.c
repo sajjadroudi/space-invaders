@@ -16,10 +16,13 @@ void handlePressingKeyOnMenuScreen() {
 void showMenuScreen() {
     osMutexAcquire(lcdMutexHandle, osWaitForever);
 
-    setCursor(0, 0);
-    print("1) Start Game");
+    setCursor(8, 0);
+    print("Menu");
 
     setCursor(0, 2);
+    print("1) Start Game");
+
+    setCursor(0, 3);
     print("2) About Us");
 
     osMutexRelease(lcdMutexHandle);
