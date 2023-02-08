@@ -10,6 +10,7 @@ C_SRCS += \
 ../Core/Src/characters.c \
 ../Core/Src/config.c \
 ../Core/Src/freertos.c \
+../Core/Src/keypad.c \
 ../Core/Src/lcd.c \
 ../Core/Src/main.c \
 ../Core/Src/screen_about.c \
@@ -33,6 +34,7 @@ C_DEPS += \
 ./Core/Src/characters.d \
 ./Core/Src/config.d \
 ./Core/Src/freertos.d \
+./Core/Src/keypad.d \
 ./Core/Src/lcd.d \
 ./Core/Src/main.d \
 ./Core/Src/screen_about.d \
@@ -56,6 +58,7 @@ OBJS += \
 ./Core/Src/characters.o \
 ./Core/Src/config.o \
 ./Core/Src/freertos.o \
+./Core/Src/keypad.o \
 ./Core/Src/lcd.o \
 ./Core/Src/main.o \
 ./Core/Src/screen_about.o \
