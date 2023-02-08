@@ -13,6 +13,8 @@
 
 extern osMutexId_t lcdMutexHandle;
 
+extern osSemaphoreId_t keypadSemHandle;
+
 extern RTC_HandleTypeDef hrtc;
 
 #endif /* INC_GLOBALS_H_ */

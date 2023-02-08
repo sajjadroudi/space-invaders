@@ -31,6 +31,7 @@
 #include <time.h>
 #include "screenmanager.h"
 #include "config.h"
+#include "keypad.h"
 
 /* USER CODE END Includes */
 
@@ -85,6 +86,18 @@ const osThreadAttr_t moveDownEnemies_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for handleKeyPressT */
+osThreadId_t handleKeyPressTHandle;
+const osThreadAttr_t handleKeyPressT_attributes = {
+  .name = "handleKeyPressT",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for keypadSem */
+osSemaphoreId_t keypadSemHandle;
+const osSemaphoreAttr_t keypadSem_attributes = {
+  .name = "keypadSem"
+};
 /* USER CODE BEGIN PV */
 osMutexId_t lcdMutexHandle;
 const osMutexAttr_t lcdMutex_attributes = {
@@ -103,6 +116,7 @@ void StartUpdateLcdTask(void *argument);
 void StartUpdateBulletsTask(void *argument);
 void StartEnemyShootTask(void *argument);
 void StartMoveDownEnemiesTask(void *argument);
+void StartHandleKeyPressTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -158,6 +172,10 @@ int main(void)
   lcdMutexHandle = osMutexNew(&lcdMutex_attributes);
   /* USER CODE END RTOS_MUTEX */
 
+  /* Create the semaphores(s) */
+  /* creation of keypadSem */
+  keypadSemHandle = osSemaphoreNew(1, 1, &keypadSem_attributes);
+
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
@@ -182,6 +200,9 @@ int main(void)
 
   /* creation of moveDownEnemies */
   moveDownEnemiesHandle = osThreadNew(StartMoveDownEnemiesTask, NULL, &moveDownEnemies_attributes);
+
+  /* creation of handleKeyPressT */
+  handleKeyPressTHandle = osThreadNew(StartHandleKeyPressTask, NULL, &handleKeyPressT_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -562,7 +583,7 @@ void StartUpdateLcdTask(void *argument)
 		  handleShowingScreen();
 		  lastDrawnScreen = getCurrentScreen();
 	  }
-	  osDelay(100);
+	  osDelay(350);
   }
   /* USER CODE END 5 */
 }
@@ -646,6 +667,27 @@ void StartMoveDownEnemiesTask(void *argument)
 	}
   }
   /* USER CODE END StartMoveDownEnemiesTask */
+}
+
+/* USER CODE BEGIN Header_StartHandleKeyPressTask */
+/**
+* @brief Function implementing the handleKeyPressT thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartHandleKeyPressTask */
+void StartHandleKeyPressTask(void *argument)
+{
+  /* USER CODE BEGIN StartHandleKeyPressTask */
+
+  /* Infinite loop */
+  for(;;)
+  {
+	  osSemaphoreAcquire(keypadSemHandle, osWaitForever);
+	  handleKeyPress(keyNumber);
+
+  }
+  /* USER CODE END StartHandleKeyPressTask */
 }
 
 /**

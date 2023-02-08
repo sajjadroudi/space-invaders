@@ -107,7 +107,9 @@ void handleKeyPress(int keyNum) {
 		break;
 
 		case SCREEN_INTRO:
-			goToScreen(SCREEN_MENU);
+			if(keyNum > 0) {
+				goToScreen(SCREEN_MENU);
+			}
 		break;
 
 		case SCREEN_MENU:

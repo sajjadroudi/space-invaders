@@ -1,7 +1,8 @@
 #MicroXplorer Configuration settings - do not modify
+FREERTOS.BinarySemaphores01=keypadSem,Dynamic,NULL
 FREERTOS.FootprintOK=true
-FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,FootprintOK,configTOTAL_HEAP_SIZE
-FREERTOS.Tasks01=updateLcdTask,26,1500,StartUpdateLcdTask,Default,NULL,Dynamic,NULL,NULL;updateBulletsTa,40,128,StartUpdateBulletsTask,Default,NULL,Dynamic,NULL,NULL;enemyShootTask,24,128,StartEnemyShootTask,Default,NULL,Dynamic,NULL,NULL;moveDownEnemies,24,128,StartMoveDownEnemiesTask,Default,NULL,Dynamic,NULL,NULL
+FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,FootprintOK,configTOTAL_HEAP_SIZE,BinarySemaphores01
+FREERTOS.Tasks01=updateLcdTask,26,1500,StartUpdateLcdTask,Default,NULL,Dynamic,NULL,NULL;updateBulletsTa,40,128,StartUpdateBulletsTask,Default,NULL,Dynamic,NULL,NULL;enemyShootTask,24,128,StartEnemyShootTask,Default,NULL,Dynamic,NULL,NULL;moveDownEnemies,24,128,StartMoveDownEnemiesTask,Default,NULL,Dynamic,NULL,NULL;handleKeyPressT,24,128,StartHandleKeyPressTask,Default,NULL,Dynamic,NULL,NULL
 FREERTOS.configTOTAL_HEAP_SIZE=15000
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
 File.Version=6
