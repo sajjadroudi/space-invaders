@@ -29,12 +29,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "screen_about.h"
-#include "screen_intro.h"
-#include "screen_menu.h"
-#include "screen_difflevel.h"
-#include "screen_finish.h"
-#include "screen_name.h"
+#include "screenmanager.h"
+#include "config.h"
 
 /* USER CODE END Includes */
 
@@ -65,7 +61,7 @@ PCD_HandleTypeDef hpcd_USB_FS;
 osThreadId_t updateLcdTaskHandle;
 const osThreadAttr_t updateLcdTask_attributes = {
   .name = "updateLcdTask",
-  .stack_size = 800 * 4,
+  .stack_size = 1500 * 4,
   .priority = (osPriority_t) osPriorityNormal2,
 };
 /* Definitions for updateBulletsTa */
@@ -514,11 +510,16 @@ void StartUpdateLcdTask(void *argument)
   /* USER CODE BEGIN 5 */
 	initLcd();
 
+	handleShowingScreen();
+	Screen lastDrawnScreen = getCurrentScreen();
+
   /* Infinite loop */
-  for(;;)
-  {
-    osDelay(100);
-	updateLcd();
+  for(;;)  {
+	  if(lastDrawnScreen != getCurrentScreen()) {
+		  handleShowingScreen();
+		  lastDrawnScreen = getCurrentScreen();
+	  }
+	  osDelay(100);
   }
   /* USER CODE END 5 */
 }
@@ -536,20 +537,24 @@ void StartUpdateBulletsTask(void *argument)
 
   /* Infinite loop */
   for(;;) {
-    osDelay(1000);
-    moveAllBullets();
 
-    handleHittingHero();
-	if(getHeroLevelHealth() == 0) { // If hero kooshte shod
-		// TODO
+	  osDelay(1000);
+
+	if(getCurrentScreen() == SCREEN_GAME) {
+		moveAllBullets();
+
+		handleHittingHero();
+		if(getHeroLevelHealth() == 0) { // If hero kooshte shod
+			// TODO
+		}
+
+		handleHittingEnemy();
+		if(getKilledEnemyCountToWin() == 0) {
+			// TODO
+		}
+
+		updateAllBulletsOnMatrix();
 	}
-
-    handleHittingEnemy();
-	if(getKilledEnemyCountToWin() == 0) {
-		// TODO
-	}
-
-	updateAllBulletsOnMatrix();
   }
   /* USER CODE END StartUpdateBulletsTask */
 }
@@ -567,13 +572,15 @@ void StartEnemyShootTask(void *argument)
   /* Infinite loop */
   for(;;) {
 	osDelay(5000);
-    if(rand() % 8 == 0) {
-    	int lastRow = findLastRowOfEnemies();
-    	int col = findRandomEnemyCol(lastRow);
-    	if(col != UNDEFINED) {
-    		shoot(lastRow + 1, 1, DOWN);
-    	}
-    }
+	if(getCurrentScreen() == SCREEN_GAME) {
+		if(rand() % 8 == 0) {
+			int lastRow = findLastRowOfEnemies();
+			int col = findRandomEnemyCol(lastRow);
+			if(col != UNDEFINED) {
+				shoot(lastRow + 1, 1, DOWN);
+			}
+		}
+	}
   }
   /* USER CODE END StartEnemyShootTask */
 }
@@ -590,8 +597,10 @@ void StartMoveDownEnemiesTask(void *argument)
   /* USER CODE BEGIN StartMoveDownEnemiesTask */
   /* Infinite loop */
   for(;;) {
-    osDelay(getMoveEnemiesDownInterval());
-    moveEnemiesDown();
+	  osDelay(getMoveEnemiesDownInterval());
+	if(getCurrentScreen() == SCREEN_GAME) {
+		moveEnemiesDown();
+	}
   }
   /* USER CODE END StartMoveDownEnemiesTask */
 }

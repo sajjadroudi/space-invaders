@@ -39,4 +39,6 @@ int findLastRowOfEnemies();
 
 void moveEnemiesDown();
 
+void commandHeroToShoot();
+
 #endif /* INC_LCD_H_ */

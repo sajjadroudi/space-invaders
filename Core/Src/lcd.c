@@ -191,3 +191,7 @@ void moveEnemiesDown() {
 int isEnemy(int row, int col) {
 	return lcdMat[row][col] == CT_ENEMY;
 }
+
+void commandHeroToShoot() {
+	shoot(getHeroRow() - 1, getHeroCol(), UP);
+}

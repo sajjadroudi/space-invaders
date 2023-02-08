@@ -26,8 +26,6 @@ void showAboutScreen() {
 
     osMutexAcquire(lcdMutexHandle, osWaitForever);
 
-    clear();
-
     setCursor(0, 0);
     print("Name: ");
     print(groupName);

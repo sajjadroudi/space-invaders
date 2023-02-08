@@ -16,7 +16,7 @@ void handlePressingKeyOnIntroScreen() {
 void showIntroScreen() {
     osMutexAcquire(lcdMutexHandle, osWaitForever);
 
-    setCursor(3, 0);
+    setCursor(2, 0);
 
     print("<Space Invaders>");
 
