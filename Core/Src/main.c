@@ -34,6 +34,7 @@
 #include "screen_menu.h"
 #include "screen_difflevel.h"
 #include "screen_finish.h"
+#include "screen_name.h"
 
 /* USER CODE END Includes */
 

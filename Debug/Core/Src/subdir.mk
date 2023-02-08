@@ -17,6 +17,7 @@ C_SRCS += \
 ../Core/Src/screen_finish.c \
 ../Core/Src/screen_intro.c \
 ../Core/Src/screen_menu.c \
+../Core/Src/screen_name.c \
 ../Core/Src/stm32f3xx_hal_msp.c \
 ../Core/Src/stm32f3xx_hal_timebase_tim.c \
 ../Core/Src/stm32f3xx_it.c \
@@ -38,6 +39,7 @@ C_DEPS += \
 ./Core/Src/screen_finish.d \
 ./Core/Src/screen_intro.d \
 ./Core/Src/screen_menu.d \
+./Core/Src/screen_name.d \
 ./Core/Src/stm32f3xx_hal_msp.d \
 ./Core/Src/stm32f3xx_hal_timebase_tim.d \
 ./Core/Src/stm32f3xx_it.d \
@@ -59,6 +61,7 @@ OBJS += \
 ./Core/Src/screen_finish.o \
 ./Core/Src/screen_intro.o \
 ./Core/Src/screen_menu.o \
+./Core/Src/screen_name.o \
 ./Core/Src/stm32f3xx_hal_msp.o \
 ./Core/Src/stm32f3xx_hal_timebase_tim.o \
 ./Core/Src/stm32f3xx_it.o \
